@@ -47,6 +47,10 @@ export class DotNetCodeLensProvider extends AbstractCodeLensProvider {
   }
 
   evaluateCodeLens(codeLens) {
+    // check if error occured
+    if (codeLens.isErrored())
+      return CommandFactory.createPackageErrorCommand(codeLens);
+
     // check if this package was found
     if (codeLens.packageNotFound())
       return CommandFactory.createPackageNotFoundCommand(codeLens);
