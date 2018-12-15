@@ -9,7 +9,8 @@ import { convertNugetToNodeRange } from './dotnetUtils.js';
 import {
   filterTagsByName,
   buildTagsFromVersionMap,
-  buildMapFromVersionList
+  buildMapFromVersionList,
+  validateVersions
 } from 'common/versionUtils';
 
 export function dotnetPackageParser(name, requestedVersion, appContrib) {
@@ -19,6 +20,12 @@ export function dotnetPackageParser(name, requestedVersion, appContrib) {
   // get all the versions for the package
   return nugetGetPackageVersions(name)
     .then(versions => {
+      
+      // validate semvar formats
+      if (!validateVersions(versions, requestedVersion)) {
+        throw TypeError("Invalid Version")
+      }
+
       // map from version list
       const versionMap = buildMapFromVersionList(
         versions,
@@ -80,7 +87,14 @@ export function dotnetPackageParser(name, requestedVersion, appContrib) {
           'nuget'
         );
       }
-
+      // show invalid version to user if invalid semvar format is used
+      if (error.message.indexOf("Invalid Version") !== -1) {
+        return PackageFactory.createInvalidVersion(
+          name,
+          requestedVersion,
+          'nuget'
+        )
+      }
       console.error(error);
       throw error;
     });
