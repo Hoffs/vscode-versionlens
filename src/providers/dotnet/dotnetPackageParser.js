@@ -81,7 +81,11 @@ export function dotnetPackageParser(name, requestedVersion, appContrib) {
       }
 
       console.error(error);
-      throw error;
+      return PackageFactory.createPackageErrored(
+        name,
+        requestedVersion,
+        'nuget'
+      )
     });
 
 }

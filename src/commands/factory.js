@@ -188,6 +188,13 @@ export function createPackageNotSupportedCommand(codeLens) {
   );
 }
 
+export function createPackageErrorCommand(codeLens) {
+  return createErrorCommand(
+    'An unexpected error occured',
+    codeLens
+  );
+}
+
 export function createVersionMatchNotFoundCommand(codeLens) {
   return createErrorCommand(
     `Match not found: ${codeLens.package.version}`,

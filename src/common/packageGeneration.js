@@ -43,6 +43,18 @@ export function createInvalidVersion(name, version, type) {
   );
 }
 
+export function createPackageErrored(name, version, type) {
+  return createPackage(
+    name,
+    version, {
+      type,
+      tag: {
+        isErrored: true
+      }
+    }
+  );
+}
+
 export function createPackage(name, version, meta, customGenerateVersion) {
   return {
     name,
