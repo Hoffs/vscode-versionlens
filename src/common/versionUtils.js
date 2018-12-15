@@ -113,6 +113,17 @@ export function parseVersion(version) {
 
 /**
  * @export
+ * @param {Array<String>} versions 
+ * @param {String} requestedVersion 
+ * @returns {Boolean}
+ */
+export function validateVersions(versions, requestedVersion) {
+  const validList = [requestedVersion, ...versions].filter(version => semver.valid(version) !== null);
+  return validList.length === (versions.length + 1);
+}
+
+/**
+ * @export
  * @param {String} versionToCheck 
  * @returns {Boolean}
  */
