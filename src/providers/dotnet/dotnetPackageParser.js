@@ -21,7 +21,7 @@ export function dotnetPackageParser(name, requestedVersion, appContrib) {
   return nugetGetPackageVersions(name)
     .then(versions => {
       
-      // validate semvar formats
+      // validate semver formats
       if (!validateVersions(versions, requestedVersion)) {
         throw TypeError("Invalid Version")
       }
@@ -87,7 +87,7 @@ export function dotnetPackageParser(name, requestedVersion, appContrib) {
           'nuget'
         );
       }
-      // show invalid version to user if invalid semvar format is used
+      // show invalid version to user if invalid semver format is used
       if (error.message.indexOf("Invalid Version") !== -1) {
         return PackageFactory.createInvalidVersion(
           name,
