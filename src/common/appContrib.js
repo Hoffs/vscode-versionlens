@@ -7,7 +7,7 @@ import { pubDefaultDependencyProperties } from 'providers/pub/config';
 import { dubDefaultDependencyProperties } from 'providers/dub/config';
 import {
   dotnetCSProjDefaultDependencyProperties,
-  dotnetDefaultNuGetFeeds
+  dotnetDefaultNuGetIndexes
 } from 'providers/dotnet/config';
 import {
   mavenDefaultDependencyProperties
@@ -62,9 +62,9 @@ export default new class AppContribution {
     return config.get("dotnet.tagFilter", []);
   }
 
-  get dotnetNuGetFeeds() {
+  get dotnetNuGetIndexes() {
     const config = workspace.getConfiguration('versionlens');
-    return config.get("dotnet.nugetFeeds", dotnetDefaultNuGetFeeds);
+    return config.get("dotnet.nugetIndexes", dotnetDefaultNuGetIndexes);
   }
 
   get dotnetIncludePrerelease() {
