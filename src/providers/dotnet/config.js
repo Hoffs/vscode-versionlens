@@ -7,6 +7,6 @@ export const dotnetCSProjDefaultDependencyProperties = [
   "DotNetCliToolReference"
 ];
 
-export const dotnetDefaultNuGetFeeds = [
-  "https://api-v2v3search-0.nuget.org/autocomplete"
+export const dotnetDefaultNuGetIndexes = [
+  "https://api.nuget.org/v3/index.json"
 ];
