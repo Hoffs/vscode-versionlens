@@ -6,6 +6,8 @@
 
 Shows package version information for npm, jspm, dub and dotnet core in the [Visual Studio Code](https://github.com/microsoft/vscode) editor.
 
+Originally by Peter Flannery at https://github.com/vscode-contrib/vscode-versionlens.
+
 ### Preview
 
 ![Screenshot](images/animated-preview.gif)

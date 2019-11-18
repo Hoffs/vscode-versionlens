@@ -1,15 +1,15 @@
 {
   "name": "vscode-versionlens",
   "private": true,
-  "description": "Shows the latest version for each package using code lens",
+  "description": "Shows the latest version for each package using code lens. Fork of https://github.com/vscode-contrib/vscode-versionlens.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vscode-contrib/vscode-versionlens.git"
+    "url": "https://github.com/hoffs/vscode-versionlens.git"
   },
-  "author": "Peter Flannery",
+  "author": "Ignas Maslinskas",
   "license": "MIT",
-  "version": "0.24.0",
-  "publisher": "pflannery",
+  "version": "0.25.0",
+  "publisher": "Hoffs",
   "displayName": "Version Lens",
   "icon": "images/logo.png",
   "engines": {
@@ -287,15 +287,15 @@
           "default": [],
           "description": "Define which common tagged versions you want to see. i.e. [alpha, beta]. If you don't specify any dist tags then all the dist-tags for a package will be shown."
         },
-        "versionlens.dotnet.nugetFeeds": {
+        "versionlens.dotnet.nugetIndexes": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "default": [
-            "https://api-v2v3search-0.nuget.org/autocomplete"
+            "https://api.nuget.org/v3/index.json"
           ],
-          "description": "Defines which NuGet feeds to use for package search. Has to be 'SearchAutocompleteService' endpoint, which can be found by navigating to feed index (e.g. https://api.nuget.org/v3/index.json) and looking for Url with that type."
+          "description": "Defines which NuGet feeds to use for package search. Has to be feed index (e.g. https://api.nuget.org/v3/index.json)."
         },
         "versionlens.dotnet.includePrerelease": {
           "type": "boolean",
