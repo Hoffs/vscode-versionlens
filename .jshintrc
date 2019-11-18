@@ -1,6 +1,6 @@
 {
   // enforcing options
-  "esversion": 6,
+  "esversion": 9,
   "asi": true,        // relax semicolons
   "varstmt": true,    // no var's'
   "laxbreak": true,   // allow conditionals after line breaks
