@@ -1,3 +1,11 @@
+# 0.25.1
+
+  - Dotnet: Add more service resolvers.
+
+# 0.25.0
+
+  - Dotnet: Migrate from strict SearchAutocompleteService requirement to support multiple methods that are resolved automatically from feed index.
+
 # 0.24.0
 
   - Dart+Flutter support added (thanks to https://github.com/Gorniv)
