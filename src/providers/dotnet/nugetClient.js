@@ -65,13 +65,70 @@ async function getNugetVersionsFromPackageBaseAddress(serviceUrl, packageName) {
   }
 }
 
+// This is a required NugetV3 api
+// Uses RegistrationsBaseUrl API
+async function getNugetVersionsFromRegistrationsBaseUrl(serviceUrl, packageName) {
+  const httpRequest = require('request-light');
+  // From SearchAutocompleteService
+  if (!serviceUrl.endsWith('/')) {
+    serviceUrl = `${serviceUrl}/`;
+  }
+
+  const queryUrl = `${serviceUrl}${packageName.toLowerCase()}/index.json`;
+  const response = await httpRequest.xhr({ url: queryUrl });
+
+  if (response.status != 200) {
+    throw {
+      status: response.status,
+      responseText: response.responseText
+    };
+  }
+
+  const data = JSON.parse(response.responseText);
+  if (data.count === 0) {
+    throw { status: 404 };
+  } else {
+    const promises = data.items.filter(item => item['@type'] == 'catalog:CatalogPage').map(item => getRegistrationBaseUrlPageVersions(item['@id']));
+    const results = await Promise.all(promises);
+    return [].concat(...results).sort().reverse();
+  }
+}
+
+async function getRegistrationBaseUrlPageVersions(pageUrl) {
+  const httpRequest = require('request-light');
+  const { status, responseText } = await httpRequest.xhr({ url: pageUrl });
+
+  if (status != 200) {
+    throw { status, responseText };
+  }
+
+  const data = JSON.parse(responseText);
+  if (data.count === 0) {
+    return [];
+  }
+
+  const itemList = data['@type'] === 'catalog:CatalogPage' ? data.items : data.items[0].items;
+  let versions = itemList.map(item => item.catalogEntry.version);
+  if (!appContrib.dotnetIncludePrerelease) {
+    // If we don't want pre-release, filter out versions which don't have -
+    versions = versions.filter(ver => ver.indexOf("-") === -1);
+  }
+
+  return versions;
+}
+
 // From https://docs.microsoft.com/en-us/nuget/api/overview
 // Sorted in order that we want to get them.
 const nugetServiceResolvers = [
   { type: 'PackageBaseAddress/3.0.0', resolver: getNugetVersionsFromPackageBaseAddress },
   { type: 'SearchAutocompleteService', resolver: getNugetVersionsFromSearchAutocompleteService },
   { type: 'SearchAutocompleteService/3.0.0-beta', resolver: getNugetVersionsFromSearchAutocompleteService },
-  { type: 'SearchAutocompleteService/3.0.0-rc', resolver: getNugetVersionsFromSearchAutocompleteService }
+  { type: 'SearchAutocompleteService/3.0.0-rc', resolver: getNugetVersionsFromSearchAutocompleteService },
+  { type: 'RegistrationsBaseUrl', resolver: getNugetVersionsFromRegistrationsBaseUrl },
+  { type: 'RegistrationsBaseUrl/3.0.0-beta', resolver: getNugetVersionsFromRegistrationsBaseUrl },
+  { type: 'RegistrationsBaseUrl/3.0.0-rc', resolver: getNugetVersionsFromRegistrationsBaseUrl },
+  { type: 'RegistrationsBaseUrl/3.4.0', resolver: getNugetVersionsFromRegistrationsBaseUrl },
+  { type: 'RegistrationsBaseUrl/3.6.0', resolver: getNugetVersionsFromRegistrationsBaseUrl },
 ];
 
 async function getVersionResolverFromIndex(index) {
