@@ -1,3 +1,7 @@
+# 0.25.2
+
+  - Dotnet: Fix fatal crash when package fails to resolve.
+
 # 0.25.1
 
   - Dotnet: Add more service resolvers.
