@@ -78,6 +78,14 @@ export default {
     assert.equal(result.command.title, '\u2191 3.2.1');
     assert.equal(result.command.command, 'versionlens.updateDependencyCommand');
     assert.equal(result.command.arguments[1], '3.2.1');
+  },
+
+  "returns errored": () => {
+    const codeLens = new PackageCodeLens(testContext.testRange, null, generatePackage('SomePackage', '1.2.3', { type: 'nuget', tag: { isErrored: true, version: '3.2.1' } }), null);
+    const result = testContext.testProvider.evaluateCodeLens(codeLens, null)
+    assert.equal(result.command.title, 'An unexpected error occured');
+    assert.equal(result.command.command, null);
+    assert.equal(result.command.arguments, null);
   }
 
 }
