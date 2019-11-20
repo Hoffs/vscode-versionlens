@@ -54,7 +54,8 @@ export class PackageCodeLens extends CodeLens {
   }
 
   isErrored() {
-    return this.package.meta.tag.isErrored;
+    return this.package.meta.tag
+      && this.package.meta.tag.isErrored;
   }
 
   matchesLatestVersion() {
