@@ -27,7 +27,7 @@ export async function registrationsBaseUrlResolver(serviceUrl, packageName) {
   if (data.count === 0) {
     throw { status: 404 };
   } else {
-    const promises = data.items.filter(item => item['@type'] == 'catalog:CatalogPage').map(item => getRegistrationBaseUrlPageVersions(item['@id']));
+    const promises = data.items.map(item => getRegistrationBaseUrlPageVersions(item['@id']));
     const results = await Promise.all(promises);
     return [].concat(...results).sort().reverse();
   }
@@ -46,7 +46,7 @@ async function getRegistrationBaseUrlPageVersions(pageUrl) {
     return [];
   }
 
-  const itemList = data['@type'] === 'catalog:CatalogPage' ? data.items : data.items[0].items;
+  const itemList = data.lower || data.upper ? data.items : data.items[0].items;
   let versions = itemList.map(item => item.catalogEntry.version);
   if (!appContrib.dotnetIncludePrerelease) {
     // If we don't want pre-release, filter out versions which don't have -

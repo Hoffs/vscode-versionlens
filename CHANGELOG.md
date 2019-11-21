@@ -1,3 +1,7 @@
+# 0.25.3
+
+  - Dotnet: Do not rely on `@type` for `RegistrationsBaseUrl`.
+
 # 0.25.2
 
   - Dotnet: Fix fatal crash when package fails to resolve.
