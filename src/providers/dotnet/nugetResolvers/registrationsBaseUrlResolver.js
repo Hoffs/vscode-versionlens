@@ -8,7 +8,7 @@ import appContrib from 'common/appContrib';
 // Uses RegistrationsBaseUrl API
 export async function registrationsBaseUrlResolver(serviceUrl, packageName) {
   const httpRequest = require('request-light');
-  // From SearchAutocompleteService
+
   if (!serviceUrl.endsWith('/')) {
     serviceUrl = `${serviceUrl}/`;
   }
@@ -46,7 +46,7 @@ async function getRegistrationBaseUrlPageVersions(pageUrl) {
     return [];
   }
 
-  const itemList = data.lower || data.upper ? data.items : data.items[0].items;
+  const itemList = data.lower || data.upper ? data.items : data.items.flatMap(it => it.items);
   let versions = itemList.map(item => item.catalogEntry.version);
   if (!appContrib.dotnetIncludePrerelease) {
     // If we don't want pre-release, filter out versions which don't have -
