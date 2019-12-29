@@ -8,7 +8,7 @@
   },
   "author": "Ignas Maslinskas",
   "license": "MIT",
-  "version": "0.25.3",
+  "version": "0.25.4",
   "publisher": "Hoffs",
   "displayName": "Version Lens",
   "icon": "images/logo.png",
@@ -298,6 +298,14 @@
             "https://api.nuget.org/v3/index.json"
           ],
           "description": "Defines which NuGet feeds to use for package search. Has to be feed index (e.g. https://api.nuget.org/v3/index.json)."
+        },
+        "versionlens.dotnet.nugetResolverPriority": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Defines a list of resolvers that will first be searched for in the index (available resolvers can be found: https://github.com/Hoffs/vscode-versionlens/blob/master/src/providers/dotnet/nugetClient.js#L16 )"
         },
         "versionlens.dotnet.includePrerelease": {
           "type": "boolean",
