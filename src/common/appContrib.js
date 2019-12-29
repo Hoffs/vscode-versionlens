@@ -67,6 +67,11 @@ export default new class AppContribution {
     return config.get("dotnet.nugetIndexes", dotnetDefaultNuGetIndexes);
   }
 
+  get dotnetNuGetResolverPriority() {
+    const config = workspace.getConfiguration('versionlens');
+    return config.get("dotnet.nugetResolverPriority", []);
+  }
+
   get dotnetIncludePrerelease() {
     const config = workspace.getConfiguration('versionlens');
     return config.get("dotnet.includePrerelease", true);
