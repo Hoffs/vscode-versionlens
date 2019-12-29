@@ -56,15 +56,17 @@
     "vscode": "1.1.35"
   },
   "dependencies": {
-    "systemjs": "~0.21.6",
-    "npm": "6.5.0",
-    "npm-package-arg": "6.1.0",
     "minimatch": "3.0.4",
+    "npm": "^6.13.4",
+    "npm-package-arg": "6.1.0",
+    "odata-client": "^0.6.13",
     "opener": "1.5.1",
     "request-light": "0.2.4",
     "semver": "6.1.2",
+    "systemjs": "~0.21.6",
     "vscode-contrib-jsonc": "1.0.0-beta.2",
     "vscode-languageclient": "5.2.1",
+    "xml-js": "^1.6.11",
     "xmldoc": "1.1.2",
     "yaml": "1.6.0"
   },
