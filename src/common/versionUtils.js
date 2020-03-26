@@ -308,6 +308,10 @@ export function buildTagsFromVersionMap(versionMap, requestedVersion) {
   const isRequestedVersionValid = semver.validRange(requestedVersion);
   const versionMatchNotFound = !versionMap.maxSatisfyingVersion;
 
+  // properly sort based on semver
+  versionMap.releases = semver.sort(versionMap.releases || []).reverse();
+  versionMap.taggedVersions.sort((a, b) => semver.compare(a.version, b.version)).reverse();
+
   // create the latest release entry
   const latestEntry = {
     name: "latest",
