@@ -1,3 +1,6 @@
+# 0.25.6
+  - Dotnet: Fix incorrect latest versions being reported when semver single section has more than 1 digit.
+
 # 0.25.3
 
   - Dotnet: Do not rely on `@type` for `RegistrationsBaseUrl`.
