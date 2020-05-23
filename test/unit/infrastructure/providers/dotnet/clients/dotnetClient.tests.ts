@@ -100,7 +100,7 @@ export const DotnetClientRequestTests = {
       let promiseSpawnMock = (cmd, args, opts) => {
         return Promise.resolve({
           code: 0,
-          stdout: Fixtures.disabledSources
+          stdout: Fixtures.disabledSource
         });
       };
       mock('@npmcli/promise-spawn', promiseSpawnMock);
@@ -120,6 +120,43 @@ export const DotnetClientRequestTests = {
       return cut.fetchSources('.')
         .then(actualSources => {
           assert.equal(actualSources.length, 0);
+        });
+    },
+
+    "returns only enabled sources when some sources are disabled": async () => {
+      const testFeeds = [];
+      const expected = [
+        {
+          enabled: true,
+          machineWide: false,
+          url: 'https://api.nuget.org/v3/index.json',
+          protocol: UrlHelpers.RegistryProtocols.https
+        },
+      ]
+
+      let promiseSpawnMock = (cmd, args, opts) => {
+        return Promise.resolve({
+          code: 0,
+          stdout: Fixtures.enabledAndDisabledSources
+        });
+      };
+      mock('@npmcli/promise-spawn', promiseSpawnMock);
+
+      // setup test feeds
+      const config = new DotNetConfig(
+        new VersionLensExtension(
+          {
+            get: (k) => <any>testFeeds,
+            defrost: () => null
+          },
+          null
+        )
+      )
+
+      const cut = new DotNetClient(config, new LoggerMock());
+      return cut.fetchSources('.')
+        .then(actualSources => {
+          assert.deepEqual(actualSources, expected);
         });
     },
 

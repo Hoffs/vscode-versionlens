@@ -40,7 +40,7 @@ export class DotNetClient extends ProcessClientRequest {
       // pop any blank entries
       if (lines[lines.length - 1] === '') lines.pop();
 
-      return parseSourcesArray(lines);
+      return parseSourcesArray(lines).filter(s => s.enabled);
     }).then(sources => {
       // combine the sources where feed take precedent
       const feedSources = convertFeedsToSources(this.config.nuget.sources);
