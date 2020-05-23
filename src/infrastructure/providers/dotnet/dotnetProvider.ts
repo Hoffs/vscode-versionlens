@@ -65,8 +65,13 @@ export class DotNetVersionLensProvider
     // get each service index source from the dotnet cli
     const sources = await this.dotnetClient.fetchSources(packagePath)
 
+    // enabled sources only
+    const enabledSources = sources.filter(
+      s => s.enabled
+    );
+
     // remote sources only
-    const remoteSources = sources.filter(
+    const remoteSources = enabledSources.filter(
       s => s.protocol === RegistryProtocols.https ||
         s.protocol === RegistryProtocols.http
     );
